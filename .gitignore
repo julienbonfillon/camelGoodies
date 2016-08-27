@@ -13,6 +13,12 @@ hs_err_pid*
 
 # Eclipse .project
 .project
+target
+.settings
+.classpath
+.factorypath
+
 
 # MAC Files
 .DS_Store
+

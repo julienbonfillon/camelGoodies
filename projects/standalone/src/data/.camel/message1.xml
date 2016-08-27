@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>Untitled Page</title>
+   </head>
+   <body>
+      <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+      <title></title>
+      <table align="center" cellspacing="0" border="0" width="100%" style="box-shadow: 0px 0px 15px #B9B8B8; width: 650px; margin-top: 0px;">
+         <tbody>
+            <tr>
+               <td>
+                  <table align="center" cellspacing="0" border="0" style="background: white; font-family: Arial, Helvetica, sans-serif; color: #5c5d5f; font-size: 12px; margin:0;">
+                     <thead valign="bottom">
+                        <tr>
+                           <th style="padding-top: 10px; padding-left: 25px; padding-right: 40px;"><img src="cid:<[LOGOHEADER]>" height="57" width="173" alt="BASEinet" align="left"></th>
+                           <th align="right" style="padding-top: 10px; padding-left: 25px; padding-right: 40px; font-size: 14px;text-align:right">
+                              <span>
+                              		<b>	Source:<[PCDSOURCE]><br>
+                              			Metodo:<[PCDMOP]>
+                              		</b>
+                              </span>
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td colspan="2" style="padding-top: 0px; padding-left: 40px; padding-right:50px;">
+                              <div style="text-align:center">
+                                 <p>
+                                 	<br><br><br>
+                                    La transacci√≥n <[PCDUID]> est√° en estatus <[PCDSTATUS]>
+                                    <br><br><br>
+                                 </p>
+                              </div>
+                              <div style="text-align:center; margin:0 30px 0 30px;">
+                                 <p style="width:90%;text-align:left">
+                                 	<br>
+                                    Decripci√≥n del evento<br><br>
+                                    <[PCDFREETEXT]>
+                                    <br><br>
+                                 </p>
+                              </div>
+                              <div align="center">
+                                 <table border="0" cellpadding="5" cellspacing="3" style=" font-family: Arial, Helvetica, sans-serif; font-size: 12px" width="90%">
+                                    <tbody>
+                                       <tr>
+                                          <td style="width:35%; background-color:#white; color:white;" align="right"></td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDMESSAGE_FUNCTION]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Referencia</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDSOURCE_REF]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Fecha de Entrada</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDENTRY_DATE]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Fecha de Ejecuci√≥n</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDEXECUTION_DATE]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#white;" align="right"><strong>Debitor</strong></td>
+                                          <td style="width:65%; background-color:#white"></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Nombre</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDDBT_NAME]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Cuenta</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDDBT_ACCNT]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Importe</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDDBT_AMOUNT]> <[PCDBT_CURRENCY]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#white;" align="right"><strong>Creditor</strong></td>
+                                          <td style="width:65%; background-color:#white"></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Nombre</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDCREDT_NAME]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Cuenta</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDCREDT_ACCNT]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">BIC</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDCREDT_BIC]></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width:35%; background-color:#7e8082; color:white;" align="right">Importe</td>
+                                          <td style="width:65%; background-color:#CBCACA;" align="left"><[PCDCRED_AMOUNT]> <[PCDCRED_CURRENCY]></td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                              <br>
+                              <br>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center" valign="top"><img src="cid:<[LOGOFOOTER]>" alt="BaseFooter" align="middle" style="padding-top: 0px; padding-left: 60px; padding-right: 50px;"></td>
+                           <td width="300" align="left" valign="top" style="padding-left: 20px; padding-right: 40px;">
+                              <br>
+                              Para cualquier duda en relaci√≥n con la operatividad de <b>BASEinet</b>: <br>
+                              <[CONTACT]>
+                              <br><br><br>
+                           </td>
+                        </tr>
+                     </tbody>
+                     <tfoot>
+                        <tr>
+                           <td colspan="2" style="background-color: #7e8082; color: white; font-size:
+                              10px; padding: 15px 20px; text-align: justify;">
+                              <div><a style="color: #f4a733;" href="http://www.bancobase.com/aviso-de-privacidad.html">Aviso de Privacidad</a>. Este mensaje y cualquier archivo anexo incluido en el mismo (en lo sucesivo la &quot;Informaci√≥n&quot;) son enviados √∫nicamente para el destinatario previsto
+                                 y pueden contener informaci√≥n confidencial y/o privilegiada. Si usted no es el destinatario previsto, por este medio se le notifica que cualquier copia, uso, o distribuci√≥n de la Informaci√≥n se encuentra estrictamente prohibida y sujeta a las sanciones establecidas
+                                 en las leyes correspondientes por lo que deber√° notificarnos por <a style="color: #f4a733;" href="mailto:centrodeatencion@bancobase.com">
+                                 E-mail</a> y suprimir inmediatamente este mensaje de su sistema. 
+                              </div>
+                           </td>
+                        </tr>
+                     </tfoot>
+                  </table>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </body>
+</html>
