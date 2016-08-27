@@ -3,7 +3,7 @@ Some Camel use examples ...
 
 the components/mail has been generated using the maven archetype generator based on camel Archetype implementation org.apache.camel.archetypes.camel-archetype-component
 
-(Official Documentation)[http://camel.apache.org/creating-a-new-camel-component.html]
+[Official Documentation](http://camel.apache.org/creating-a-new-camel-component.html)
 
 mvn archetype:generate                   \
   -DarchetypeGroupId=org.apache.camel.archetypes  \
@@ -15,7 +15,7 @@ mvn archetype:generate                   \
 
   the projects/standalone project has been generated using using the maven archetype generator based on camel Archetype implementation org.apache.camel.archetypes.camel-archetype-spring
 
-(Official Documentation)[http://camel.apache.org/creating-a-new-spring-based-camel-route.html]
+[Official Documentation](http://camel.apache.org/creating-a-new-spring-based-camel-route.html)
 
 
   mvn archetype:generate                   \
