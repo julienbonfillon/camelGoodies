@@ -17,8 +17,8 @@ public class mailerProducer extends DefaultProducer {
     private com.volantetech.vpe.util.net.mail.MailAgent _mailSender = null;
     private final com.volantetech.vpe.util.net.mail.SmtpConfiguration _serverCfg = new com.volantetech.vpe.util.net.mail.SmtpConfiguration() ;
     private final com.volantetech.vpe.util.net.mail.DestinatorList _destList = new com.volantetech.vpe.util.net.mail.DestinatorList();
-    private final com.volantetech.vpe.util.net.mail.AttachementList _attachList = new com.volantetech.vpe.util.net.mail.AttachementList();
-    private final com.volantetech.vpe.util.net.mail.EmbeddedList _embeddedList = new com.volantetech.vpe.util.net.mail.EmbeddedList();
+    private com.volantetech.vpe.util.net.mail.AttachementList _attachList = new com.volantetech.vpe.util.net.mail.AttachementList();
+    private com.volantetech.vpe.util.net.mail.EmbeddedList _embeddedList = new com.volantetech.vpe.util.net.mail.EmbeddedList();
 
     public mailerProducer(mailerEndpoint endpoint) {
         super(endpoint);
@@ -31,12 +31,14 @@ public class mailerProducer extends DefaultProducer {
 	    										String tokenizedDestList,
 	    										String destListToken,
 	    										DestinatorType destType){
-    	String[] addDestList= this.endpoint.getTo().split(destListToken);
+    	String[] addDestList= tokenizedDestList.split(destListToken);
     	for(int iLoop = 0; iLoop < addDestList.length;iLoop ++){
-    		Destinator newDest = new Destinator();
-    		newDest.iDestType = destType.getValue();
-    		newDest.sDestinaryAddress = addDestList[iLoop];
-    		currDestList.add(newDest);	
+    		if(!addDestList[iLoop].isEmpty()){
+	    		Destinator newDest = new Destinator();
+	    		newDest.iDestType = destType.getValue();
+	    		newDest.sDestinaryAddress = addDestList[iLoop];
+	    		currDestList.add(newDest);
+    		}
     	}
     	return currDestList;
     }
@@ -63,31 +65,35 @@ public class mailerProducer extends DefaultProducer {
     	 * Tokenize the to/cc/bcc destination lists
     	 * 
     	 * */
+    	log.info("to:"+this.endpoint.getTo());
     	
     	if(null!=this.endpoint.getTo())
     		this._destList.destinary = getDestList(	this._destList.destinary, 
 													this.endpoint.getTo(),
 													";",
 													DestinatorType.TO);
-    	log.error("!!!!!!THIS IS YOUR GETTO!!!!=>"+this.endpoint.getTo());
     	
+    	log.info("cc:"+this.endpoint.getCc());
     	if(null!=this.endpoint.getCc())
     		this._destList.destinary = getDestList(	this._destList.destinary, 
 													this.endpoint.getCc(),
 													";",
 													DestinatorType.CC);
     	
-    	log.error("!!!!!!THIS IS YOUR GETTO!!!!=>"+this.endpoint.getCc());
-    	
+    	log.info("bcc:"+this.endpoint.getBcc());
     	if(null!=this.endpoint.getBcc())
     		this._destList.destinary = getDestList(	this._destList.destinary, 
 													this.endpoint.getBcc(),
 													";",
 													DestinatorType.BCC);
     	
-    	log.error("!!!!!!THIS IS YOUR GETTO!!!!=>"+this.endpoint.getBcc());
-    	
     	this._mailSender = new com.volantetech.vpe.util.net.mail.MailAgent(this._serverCfg);
+    	
+    	if(null!= exchange.getIn().getHeader("ATTACHEMENT_LIST"))
+    		_attachList = (com.volantetech.vpe.util.net.mail.AttachementList)exchange.getIn().getHeader("ATTACHEMENT_LIST");
+    	if(null!= exchange.getIn().getHeader("EMBEDDED_LIST"))
+    		_embeddedList = (com.volantetech.vpe.util.net.mail.EmbeddedList)exchange.getIn().getHeader("EMBEDDED_LIST");
+    	
     	this._mailSender.Send(	this._destList,
 		    					exchange.getIn().getBody(String.class),
 		    					this.endpoint.getMailSubject(),
