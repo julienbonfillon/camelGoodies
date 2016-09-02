@@ -1,6 +1,5 @@
 package org.pushitio.eip.camel.components;
 
-import java.util.List;
 import java.util.ArrayList;
 
 import org.apache.camel.Exchange;
@@ -14,18 +13,11 @@ import com.volantetech.vpe.util.net.mail.Destinator;
  */
 public class mailerProducer extends DefaultProducer {
     private mailerEndpoint endpoint;
-    private com.volantetech.vpe.util.net.mail.MailAgent _mailSender = null;
-    private final com.volantetech.vpe.util.net.mail.SmtpConfiguration _serverCfg = new com.volantetech.vpe.util.net.mail.SmtpConfiguration() ;
-    private final com.volantetech.vpe.util.net.mail.DestinatorList _destList = new com.volantetech.vpe.util.net.mail.DestinatorList();
-    private com.volantetech.vpe.util.net.mail.AttachementList _attachList = new com.volantetech.vpe.util.net.mail.AttachementList();
-    private com.volantetech.vpe.util.net.mail.EmbeddedList _embeddedList = new com.volantetech.vpe.util.net.mail.EmbeddedList();
 
     public mailerProducer(mailerEndpoint endpoint) {
         super(endpoint);
         this.endpoint = endpoint;
     }
-    
-    
     
     private ArrayList<Destinator> getDestList(	ArrayList<Destinator> currDestList, 
 	    										String tokenizedDestList,
@@ -47,19 +39,21 @@ public class mailerProducer extends DefaultProducer {
     
     
     public void process(Exchange exchange) throws Exception {
+    	com.volantetech.vpe.util.net.mail.SmtpConfiguration serverCfg = new com.volantetech.vpe.util.net.mail.SmtpConfiguration();
+    	
     	//log.info(exchange.getIn().getBody(String.class));
-    	_serverCfg.setSmtpHost(this.endpoint.getUrl());
-    	_serverCfg.setSmtpPort(this.endpoint.getPort());
+    	serverCfg.setSmtpHost(this.endpoint.getUrl());
+    	serverCfg.setSmtpPort(this.endpoint.getPort());
     	String crypto = this.endpoint.getCrypto();
     	
     	if(null!=crypto)
 	    	if(crypto.equals("SSL"))
-	            _serverCfg.isSSL(true);
+	            serverCfg.isSSL(true);
 	        else if(crypto.equals("TLS"))
-	            _serverCfg.isTLS(true);
+	            serverCfg.isTLS(true);
     	
-    	_serverCfg.setLogin(this.endpoint.getLogin());
-    	_serverCfg.setPassword(this.endpoint.getPassword());
+    	serverCfg.setLogin(this.endpoint.getLogin());
+    	serverCfg.setPassword(this.endpoint.getPassword());
     	
     	/*
     	 * Tokenize the to/cc/bcc destination lists
@@ -67,41 +61,44 @@ public class mailerProducer extends DefaultProducer {
     	 * */
     	log.info("to:"+this.endpoint.getTo());
     	
+    	com.volantetech.vpe.util.net.mail.DestinatorList destList = new com.volantetech.vpe.util.net.mail.DestinatorList();
+    	
     	if(null!=this.endpoint.getTo())
-    		this._destList.destinary = getDestList(	this._destList.destinary, 
-													this.endpoint.getTo(),
-													";",
-													DestinatorType.TO);
+    		destList.destinary = getDestList(	destList.destinary, 
+												this.endpoint.getTo(),
+												";",
+												DestinatorType.TO);
     	
     	log.info("cc:"+this.endpoint.getCc());
     	if(null!=this.endpoint.getCc())
-    		this._destList.destinary = getDestList(	this._destList.destinary, 
-													this.endpoint.getCc(),
-													";",
-													DestinatorType.CC);
+    		destList.destinary = getDestList(	destList.destinary, 
+												this.endpoint.getCc(),
+												";",
+												DestinatorType.CC);
     	
     	log.info("bcc:"+this.endpoint.getBcc());
     	if(null!=this.endpoint.getBcc())
-    		this._destList.destinary = getDestList(	this._destList.destinary, 
-													this.endpoint.getBcc(),
-													";",
-													DestinatorType.BCC);
+    		destList.destinary = getDestList(	destList.destinary, 
+												this.endpoint.getBcc(),
+												";",
+												DestinatorType.BCC);
     	
-    	this._mailSender = new com.volantetech.vpe.util.net.mail.MailAgent(this._serverCfg);
+    	com.volantetech.vpe.util.net.mail.MailAgent mailSender = new com.volantetech.vpe.util.net.mail.MailAgent(serverCfg);
+    	com.volantetech.vpe.util.net.mail.AttachementList attachList = new com.volantetech.vpe.util.net.mail.AttachementList();
+        com.volantetech.vpe.util.net.mail.EmbeddedList embeddedList = new com.volantetech.vpe.util.net.mail.EmbeddedList();
     	
     	if(null!= exchange.getIn().getHeader("ATTACHEMENT_LIST"))
-    		_attachList = (com.volantetech.vpe.util.net.mail.AttachementList)exchange.getIn().getHeader("ATTACHEMENT_LIST");
+    		attachList = (com.volantetech.vpe.util.net.mail.AttachementList)exchange.getIn().getHeader("ATTACHEMENT_LIST");
     	if(null!= exchange.getIn().getHeader("EMBEDDED_LIST"))
-    		_embeddedList = (com.volantetech.vpe.util.net.mail.EmbeddedList)exchange.getIn().getHeader("EMBEDDED_LIST");
+    		embeddedList = (com.volantetech.vpe.util.net.mail.EmbeddedList)exchange.getIn().getHeader("EMBEDDED_LIST");
     	
-    	this._mailSender.Send(	this._destList,
-		    					exchange.getIn().getBody(String.class),
-		    					this.endpoint.getMailSubject(),
-		    					this.endpoint.getFrom(),
-		    					this.endpoint.getFromUserFriendly(),
-		    					this.endpoint.getReplyTo(),
-		    					this._attachList,
-		    					this._embeddedList);
+    	mailSender.Send(	destList,
+	    					exchange.getIn().getBody(String.class),
+	    					this.endpoint.getMailSubject(),
+	    					this.endpoint.getFrom(),
+	    					this.endpoint.getFromUserFriendly(),
+	    					this.endpoint.getReplyTo(),
+	    					attachList,
+	    					embeddedList);
     }
-
 }

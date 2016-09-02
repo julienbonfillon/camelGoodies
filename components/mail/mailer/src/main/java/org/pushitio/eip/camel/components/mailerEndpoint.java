@@ -65,7 +65,7 @@ public class mailerEndpoint extends DefaultEndpoint {
     }
 
     public boolean isSingleton() {
-        return true;
+        return false;
     }
 
 	/**
@@ -249,10 +249,5 @@ public class mailerEndpoint extends DefaultEndpoint {
 	public void setMailSubject(String mailSubject) {
 		this.mailSubject = mailSubject;
 	}
-	
-	
-	
-	
-	
     
 }
