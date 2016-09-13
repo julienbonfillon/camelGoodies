@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1473521970632
+Bnd-LastModified: 1473725958593
 Build-Jdk: 1.8.0_51
 Built-By: julien
 Bundle-ManifestVersion: 2
@@ -8,11 +8,13 @@ Bundle-SymbolicName: org.pushitio.eip.camel.components.snmptrap
 Bundle-Version: 2.17.3.SNAPSHOT
 Created-By: Apache Maven Bundle Plugin
 Export-Package: org.pushitio.eip.camel.components;uses:="org.apache.came
- l,org.apache.camel.impl,org.apache.camel.spi,org.slf4j";version="2.17.3
- .SNAPSHOT"
+ l,org.apache.camel.impl,org.apache.camel.spi,org.slf4j,com.volantetech.
+ vpe.util.net.snmp.agent.Impl,org.pushitio.eip.camel.components.snmp";ve
+ rsion="2.17.3.SNAPSHOT",org.pushitio.eip.camel.components.snmp;version=
+ "2.17.3.SNAPSHOT"
 Export-Service: org.apache.camel.spi.ComponentResolver;component=snmptra
  p
-Import-Package: org.apache.camel;version="[2.17,3)",org.apache.camel.imp
- l;version="[2.17,3)",org.apache.camel.spi;version="[2.17,3)",org.slf4j;
- version="[1.7,2)"
+Import-Package: com.volantetech.vpe.util.net.snmp.agent.Impl,org.apache.
+ camel;version="[2.17,3)",org.apache.camel.impl;version="[2.17,3)",org.a
+ pache.camel.spi;version="[2.17,3)",org.slf4j;version="[1.7,2)"
 Tool: Bnd-1.50.0

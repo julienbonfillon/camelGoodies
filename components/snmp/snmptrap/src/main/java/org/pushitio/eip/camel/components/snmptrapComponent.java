@@ -21,7 +21,7 @@ public class snmptrapComponent extends UriEndpointComponent {
     }
 
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        Endpoint endpoint = new snmptrapEndpoint(uri, this);
+        Endpoint endpoint = new snmptrapEndpoint(uri,remaining, this);
         setProperties(endpoint, parameters);
         return endpoint;
     }

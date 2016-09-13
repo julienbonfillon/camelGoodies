@@ -1,5 +1,7 @@
 package org.pushitio.eip.camel.components;
 
+import java.net.URI;
+
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -9,45 +11,56 @@ import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
 
-import com.volantetech.vpe.util.net.snmp.agent.Impl.SimpleBindingProps;
-
 /**
  * Represents a snmptrap endpoint.
  */
 @UriEndpoint(scheme = "snmptrap", title = "snmptrap", syntax="snmptrap:ip:port", consumerClass = snmptrapConsumer.class, label = "snmptrap")
 public class snmptrapEndpoint extends DefaultEndpoint {
-    @UriPath @Metadata(required = "true", defaultValue = "127.0.0.1")
+	
+	private static final String URI_ERROR = "Invalid URI. Format must be of the form snmptrap:udp://<host>[:port]";
+	
+	
+    @UriPath(description = "The IP of the Monitor") 
+    @Metadata(required = "true")
     private String ip;
-    @UriParam @Metadata(required="true",defaultValue = "162")
-    private int port = 10;
-
+    @UriPath(description = "The port of the Monitor (default = 162 )", defaultValue = "162")  
+    @Metadata(defaultValue = "162")
+    private int port = 162;
+    @UriParam (description = "The OID related to the agent emulated by the camel endpoint") 
+    @Metadata(required="true")
     private String agentOid;
-    
-    private String community;
-    
+    @UriParam (description = "Qualify the type of community",enums="public", defaultValue = "public") 
+    @Metadata(required="false", defaultValue = "public")
+    private String community = "public";
+    @UriParam (description ="Specify the version of the SNMP Agent", enums = "V2c")
+    @Metadata(required="true")
     private String version; 
-    
-    private Integer retries;
-    
-    private Long timeout;
-    
-    
+    @UriParam @Metadata(defaultValue = "0")
+    private Integer retries = 0;
+    @UriParam @Metadata(defaultValue = "60000")
+    private Long timeout = new Long(60000);
+    @UriParam (description = "Message related OID: if present, the message body will be sent and binded to messageOID") 
+    @Metadata(required="false")
     private String messageOid;
-    private String plainTextMessage;
-    
     
 
     public snmptrapEndpoint() {
     }
 
-    public snmptrapEndpoint(String uri, snmptrapComponent component) {
-        super(uri, component);
+    public snmptrapEndpoint(String endpointUri,String remaining, snmptrapComponent component) throws Exception{
+        super(endpointUri, component);
+        URI uri = new URI(remaining);
+        
+        if(!uri.getScheme().equalsIgnoreCase("udp"))
+        	throw new IllegalArgumentException(URI_ERROR);
+        
+        ip = uri.getHost();
+        if (ip == null)
+            throw new IllegalArgumentException(URI_ERROR);
+        
+        port = uri.getPort() == -1 ? 162 : uri.getPort();
     }
-
-    public snmptrapEndpoint(String endpointUri) {
-        super(endpointUri);
-    }
-
+    
     public Producer createProducer() throws Exception {
         return new snmptrapProducer(this);
     }
@@ -171,21 +184,5 @@ public class snmptrapEndpoint extends DefaultEndpoint {
 	public void setMessageOid(String messageOid) {
 		this.messageOid = messageOid;
 	}
-
-	/**
-	 * @return the plainTextMessage
-	 */
-	public String getPlainTextMessage() {
-		return plainTextMessage;
-	}
-
-	/**
-	 * @param plainTextMessage the plainTextMessage to set
-	 */
-	public void setPlainTextMessage(String plainTextMessage) {
-		this.plainTextMessage = plainTextMessage;
-	}
-    
-    
     
 }
